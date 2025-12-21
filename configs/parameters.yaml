@@ -1,0 +1,25 @@
+task:
+  choices: [
+    "extract_slices",
+    "extract_masks",
+    "extract_annotations",
+    "debug_draw",
+    "skulling",
+    "registration"
+  ]
+  help: "Task performed."
+
+dataset:
+  default: "example"
+  choices: [
+    "example",
+    "TruetaHospital",
+    "CODEC_IV",
+    "ISLES24"
+  ]
+  help: "Dataset to preprocess."
+
+output_folder:
+  default: "output"
+  help: "Output folder."
+
