@@ -1,10 +1,8 @@
 import os
-import sys
 
 from nidataset import draw_2D_annotations, register_mask_dataset, register_annotation_dataset
 from nidataset.preprocessing import skull_CTA_dataset, register_CTA_dataset
 from nidataset.slices import extract_slices_dataset, extract_annotations_dataset
-from nidataset.volume import generate_brain_mask
 
 from net.initialization.get_yaml import get_yaml
 from net.parameters.parameters import parameters_parsing
