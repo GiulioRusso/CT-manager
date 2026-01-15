@@ -1,7 +1,7 @@
 <div align="center">
 
   <!-- headline -->
-  <center><h1><img align="center" src="./doc/images/logo.png" width=100px> CT-Manager</h1></center>
+  <center><h1><img align="center" src="./doc/images/logo.png" width=150px> CT-Manager</h1></center>
 
 </div>
 
