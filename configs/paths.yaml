@@ -1,4 +1,4 @@
-# example dataset
+# example dataset: example paths to show the calls in `main.py`
 example:
   images: './example/data/images'
   images_skulling: './example/data/images_skulling'
@@ -7,16 +7,19 @@ example:
   transforms: './example/output/output_registration/transforms'
   registered: './example/output/output_registration/registered'
 
-  draw_axial_annotation: './example/output/output_annotations/axial/sub-stroke0001_axial_021.csv'
+  draw_axial_annotation: './example/output/output_annotations/axial/sub-stroke0001_bbox_axial_021.csv'
   draw_axial_image: './example/output/output_slices/axial/sub-stroke0001_axial_021.tif'
 
   draw_coronal_annotation: './example/output/output_annotations/coronal/sub-stroke0001_bbox_coronal_316.csv'
-  draw_coronal_image: './example/output/output_annotations/coronal/sub-stroke0001_bbox_coronal_316.csv'
+  draw_coronal_image: './example/output/output_slices/coronal/sub-stroke0001_coronal_316.tif'
 
   draw_sagittal_annotation: './example/output/output_annotations/sagittal/sub-stroke0001_bbox_sagittal_327.csv'
   draw_sagittal_image: './example/output/output_slices/sagittal/sub-stroke0001_sagittal_327.tif'
 
-# dataset template
+# ------- #
+# DATASET #
+# ------- #
+# dataset template: fill the paths with your locations for images, annotations, masks etc.
 my_dataset:
   images: ''
   annotations: ''
@@ -24,7 +27,10 @@ my_dataset:
   transforms: ''
   registered: ''
 
-# template
+# -------- #
+# TEMPLATE #
+# -------- #
+# template: fill the paths with your template image, brain and brain mask
 template:
   MNI152:
     image: './template/MNI152_T1_0.5mm_%32.nii.gz'

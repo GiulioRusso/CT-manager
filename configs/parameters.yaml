@@ -5,7 +5,9 @@ task:
     "extract_annotations",
     "debug_draw",
     "skulling",
-    "registration"
+    "registration",
+    "mip",
+    "resampling"
   ]
   help: "Task performed."
 

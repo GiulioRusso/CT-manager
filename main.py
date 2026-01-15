@@ -1,6 +1,6 @@
 import os
 
-from nidataset import draw_2D_annotations, register_mask_dataset, register_annotation_dataset
+from nidataset import draw_2D_annotations, register_mask_dataset, register_annotation_dataset, mip_dataset, resampling_dataset
 from nidataset.preprocessing import skull_CTA_dataset, register_CTA_dataset
 from nidataset.slices import extract_slices_dataset, extract_annotations_dataset
 
@@ -142,12 +142,16 @@ def main():
                              output_path=os.path.join(os.getcwd(), parser.output_folder),
                              saving_mode="folder")
 
+        print("NOTE: define the transforms and registered path after the call of `register_CTA_dataset` and before launching `register_mask_dataset`.")
+
         # registration applied to masks
         register_mask_dataset(mask_folder=paths[parser.dataset]['masks'],
                               transform_folder=paths[parser.dataset]['transforms'],
                               registered_folder=paths[parser.dataset]['registered'],
                               output_path=os.path.join(os.getcwd(), parser.output_folder),
                               saving_mode="folder")
+
+        print("NOTE: define the transforms and registered path after the call of `register_CTA_dataset` and before launching `register_annotation_dataset`.")
 
         # registration applied to annotations
         register_annotation_dataset(annotation_folder=paths[parser.dataset]['annotations'],
@@ -156,6 +160,23 @@ def main():
                                     output_path=os.path.join(os.getcwd(), parser.output_folder),
                                     recalculate_bbox=False,
                                     saving_mode="folder")
+
+    elif parser.task == 'mip':
+
+        mip_dataset(nii_folder=paths[parser.dataset]['images'],
+                    output_path=os.path.join(os.getcwd(), parser.output_folder),
+                    view="axial",
+                    saving_mode='view',
+                    window_size=10,
+                    debug=True)
+
+    elif parser.task == 'resampling':
+
+        resampling_dataset(nii_folder=paths[parser.dataset]['images'],
+                           output_path=os.path.join(os.getcwd(), parser.output_folder),
+                           desired_volume=(224, 224, 128),
+                           saving_mode='folder',
+                           debug=True)
 
     else:
         raise ValueError('Unknown task {}.'.format(parser.task))
