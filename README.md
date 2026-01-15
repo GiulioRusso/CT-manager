@@ -1,10 +1,15 @@
-# 🧠 CT-MANAGER
+<div align="center">
+
+  <!-- headline -->
+  <center><h1><img align="center" src="./doc/images/logo.png" width=75px> CT-Manager</h1></center>
+
+</div>
 
 A Python project for CT data extraction and preprocessing with Ni-Dataset package:
 > [Ni-Dataset documentation](https://giuliorusso.github.io/Ni-Dataset/) <br>
 > [Ni-Dataset official repository](https://github.com/GiulioRusso/Ni-Dataset)
 
-<br><img src="./doc/images/logo.png" width=100%>
+<br><img src="./doc/images/ct-manager.png" width=100%>
 
 ## 📲 Installation and Configuration
 
