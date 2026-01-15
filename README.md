@@ -4,6 +4,8 @@ A Python project for CT data extraction and preprocessing with Ni-Dataset packag
 > [Ni-Dataset documentation](https://giuliorusso.github.io/Ni-Dataset/) <br>
 > [Ni-Dataset official repository](https://github.com/GiulioRusso/Ni-Dataset)
 
+<br><img src="./doc/images/logo.png" width=100%>
+
 ## 📲 Installation and Configuration
 
 1. Install requirements:
@@ -39,16 +41,16 @@ python3 main.py --dataset=my_dataset --task=extract_slices --output_folder=slice
 ```
 
 **Available tasks:**
-- `extract_slices`: Extract 2D slices from 3D images
-- `extract_masks`: Extract 2D slices from 3D masks
-- `extract_annotations`: Extract 2D annotations
-- `debug_draw`: Visualize annotations on images
-- `skulling`: Remove skull from brain CT (requires FSL)
-- `registration`: Register images to the specified template
-- `mip`: Apply Maximum-Intensity-Projection
-- `resampling`: Resample CTs to a target volume
+- `extract_slices`: Extract 2D slices from 3D images.
+- `extract_masks`: Extract 2D slices from 3D masks.
+- `extract_annotations`: Extract 2D annotations.
+- `debug_draw`: Visualize annotations on images.
+- `skulling`: Remove skull from brain CT (requires FSL).
+- `registration`: Register images to the specified template.
+- `mip`: Apply Maximum-Intensity-Projection.
+- `resampling`: Resample CTs to a target volume.
 
 ## ⚠️ Troubleshooting
 
-- **Skulling task issues:** Run from terminal instead of IDE. Ensure input paths contain no spaces. Verify FSL is installed and accessible in PATH.
+- **Skulling task issues:** Run from terminal instead of IDE. Ensure input paths contain no spaces. Verify FSL is installed and accessible in `PATH`.
 - **Registration failures:** Check the template paths in `paths.yaml`. Verify input images are valid NIfTI format and ensure sufficient disk space for output.
