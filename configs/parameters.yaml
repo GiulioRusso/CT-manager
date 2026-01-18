@@ -15,9 +15,7 @@ dataset:
   default: "example"
   choices: [
     "example",
-    "TruetaHospital",
-    "CODEC_IV",
-    "ISLES24"
+    "my_dataset"
   ]
   help: "Dataset to preprocess."
 

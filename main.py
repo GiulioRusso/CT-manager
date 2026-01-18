@@ -107,18 +107,18 @@ def main():
     elif parser.task == 'debug_draw':
 
         # axial
-        draw_2D_annotations(annotation_path=paths[parser.dataset]['draw_axial_annotation'],
-                            image_path=paths[parser.dataset]['draw_axial_image'],
+        draw_2D_annotations(annotation_path=paths[parser.dataset]['axial_annotation'],
+                            image_path=paths[parser.dataset]['axial_image'],
                             output_path=os.path.join(os.getcwd(), parser.output_folder))
 
         # coronal
-        draw_2D_annotations(annotation_path=paths[parser.dataset]['draw_coronal_annotation'],
-                            image_path=paths[parser.dataset]['draw_coronal_image'],
+        draw_2D_annotations(annotation_path=paths[parser.dataset]['coronal_annotation'],
+                            image_path=paths[parser.dataset]['coronal_image'],
                             output_path=os.path.join(os.getcwd(), parser.output_folder))
 
         # sagittal
-        draw_2D_annotations(annotation_path=paths[parser.dataset]['draw_sagittal_annotation'],
-                            image_path=paths[parser.dataset]['draw_sagittal_image'],
+        draw_2D_annotations(annotation_path=paths[parser.dataset]['sagittal_annotation'],
+                            image_path=paths[parser.dataset]['sagittal_image'],
                             output_path=os.path.join(os.getcwd(), parser.output_folder))
 
     elif parser.task == 'skulling':

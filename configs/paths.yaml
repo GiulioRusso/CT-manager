@@ -7,14 +7,14 @@ example:
   transforms: './example/output/output_registration/transforms'
   registered: './example/output/output_registration/registered'
 
-  draw_axial_annotation: './example/output/output_annotations/axial/sub-stroke0001_bbox_axial_021.csv'
-  draw_axial_image: './example/output/output_slices/axial/sub-stroke0001_axial_021.tif'
+  axial_annotation: './example/output/output_annotations/axial/sub-stroke0001_bbox_axial_021.csv'
+  axial_image: './example/output/output_slices/axial/sub-stroke0001_axial_021.tif'
 
-  draw_coronal_annotation: './example/output/output_annotations/coronal/sub-stroke0001_bbox_coronal_316.csv'
-  draw_coronal_image: './example/output/output_slices/coronal/sub-stroke0001_coronal_316.tif'
+  coronal_annotation: './example/output/output_annotations/coronal/sub-stroke0001_bbox_coronal_316.csv'
+  coronal_image: './example/output/output_slices/coronal/sub-stroke0001_coronal_316.tif'
 
-  draw_sagittal_annotation: './example/output/output_annotations/sagittal/sub-stroke0001_bbox_sagittal_327.csv'
-  draw_sagittal_image: './example/output/output_slices/sagittal/sub-stroke0001_sagittal_327.tif'
+  sagittal_annotation: './example/output/output_annotations/sagittal/sub-stroke0001_bbox_sagittal_327.csv'
+  sagittal_image: './example/output/output_slices/sagittal/sub-stroke0001_sagittal_327.tif'
 
 # ------- #
 # DATASET #
