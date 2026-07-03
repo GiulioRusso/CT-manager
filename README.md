@@ -5,9 +5,7 @@
 
 </div>
 
-A Python project for CT data extraction and preprocessing with Ni-Dataset package:
-> [Ni-Dataset documentation](https://giuliorusso.github.io/Ni-Dataset/) <br>
-> [Ni-Dataset official repository](https://github.com/GiulioRusso/Ni-Dataset)
+End-to-end CT dataset pipeline: slice extraction, preprocessing, quality control, registration. Config-driven (`main.py`), built on [nidataset](https://github.com/GiulioRusso/Ni-Dataset).
 
 <br><img src="./doc/images/ct-manager.png" width=100%>
 
@@ -27,72 +25,20 @@ pip3 install -r requirements.txt
 
 ## 🛠️ Usage
 
-The `main.py` script is the only executable pipeline of the project. It will:
-1. Read configuration from `configs/parameters.yaml` and overload the specified parameters via argument parsing.
-2. Load dataset paths from `configs/paths.yaml`.
-3. Execute the specified task.
-4. Save results to the output folder.
+Configure your dataset and task in `configs/`, then run:
 
 ```bash
-python3 main.py 
---dataset=<dataset_name> 
---task=<task_name> 
---output_folder=<folder_name>
+python3 main.py --dataset=<name> --task=<task> --output_folder=<dir>
 ```
 
-**Example:**
-```bash
-python3 main.py --dataset=my_dataset --task=extract_slices --output_folder=slices
-```
+Edit `configs/parameters.yaml` to set task and dataset, `configs/paths.yaml` for data paths. Available tasks: `extract_slices`, `extract_masks`, `extract_annotations`, `debug_draw`, `skulling` (requires FSL), `registration`, `mip`, `resampling`, `qc_check`, `qc_dataset`. Full task reference in [`configs/parameters.yaml`](configs/parameters.yaml).
 
-**Available tasks:**
-- `extract_slices`: Extract 2D slices from 3D images.
-- `extract_masks`: Extract 2D slices from 3D masks.
-- `extract_annotations`: Extract 2D annotations.
-- `debug_draw`: Visualize annotations on images.
-- `skulling`: Remove skull from brain CT (requires FSL).
-- `registration`: Register images to the specified template.
-- `mip`: Apply Maximum-Intensity-Projection.
-- `resampling`: Resample CTs to a target volume.
-- `qc_check`: Quality control on a single NIfTI volume (geometry, data integrity, orientations).
-- `qc_dataset`: Quality control on entire dataset folder with cross-file coherence analysis.
+## 🔍 Quality Control
 
-## 🔍 Quality Control (QC)
-
-CT-Manager integrates **nidataset.qc** (v0.7.0+) to catch silent dataset bugs that poison ML training:
-
-**What it checks:**
-- **Geometry**: Affine matrices, orientation (RAS vs LAS), spacing isotropy
-- **Data integrity**: NaN/Inf values, dtype issues, all-zero volumes
-- **Pair/triple coherence**: Image↔mask alignment, annotations within masks
-
-**Single volume QC:**
-```bash
-python3 main.py --task=qc_check --dataset=my_dataset
-```
-
-**Dataset-wide QC (detects outliers):**
-```bash
-python3 main.py --task=qc_dataset --dataset=my_dataset --output_folder=qc_reports
-```
-
-**Output:** JSON report with per-file checks + dataset distributions (orientation, spacing, dtype counts and outliers).
-
-**Example report snippet:**
-```
-Dataset QC: 142 items
-Status: warning
-Summary: {'ok': 138, 'warning': 4, 'error': 0}
-
-Distributions:
-  orientation: {'RAS': 140, 'LAS': 2}
-  dtype: {'uint8': 142}
-  orientation outliers: ['scan_042.nii.gz', 'scan_089.nii.gz']
-```
+Validate dataset geometry (affine, orientation, spacing), data integrity (NaN, dtype), and image↔mask coherence via `qc_check` (single volume) or `qc_dataset` (folder with outlier detection). JSON reports to output folder. Catch silent bugs (orientation mismatches, affine shifts, anisotropic spacing) that poison training. See [`example/QC_EXAMPLES.md`](example/QC_EXAMPLES.md) for usage.
 
 ## ⚠️ Troubleshooting
 
-- **Version mismatch:** Ensure `nidataset >= 0.7.0` is installed. Check with `pip list | grep nidataset`.
-- **Skulling task issues:** Run from terminal instead of IDE. Ensure input paths contain no spaces. Verify FSL is installed and accessible in `PATH`.
-- **Registration failures:** Check the template paths in `paths.yaml`. Verify input images are valid NIfTI format and ensure sufficient disk space for output.
-- **QC task issues:** For `qc_dataset`, provide either a folder of NIfTI files or a CSV manifest (columns: `image,mask[,annotation]`). JSON reports are saved to `output_folder/qc_*_report.json`.
+- **Skulling:** Run from terminal (not IDE), no spaces in paths, FSL in PATH.
+- **Registration:** Check template paths in `paths.yaml`, verify NIfTI validity, ensure disk space.
+- **QC:** Use folder of NIfTI files or CSV manifest (`image,mask[,annotation]`). Reports in `output_folder/qc_*.json`.
