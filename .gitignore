@@ -3,4 +3,5 @@ venv*/
 .DS_Store
 .idea
 template
-example
+example/output
+example/data

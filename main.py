@@ -3,6 +3,8 @@ import os
 from nidataset import draw_2D_annotations, register_mask_dataset, register_annotation_dataset, mip_dataset, resampling_dataset
 from nidataset.preprocessing import skull_CTA_dataset, register_CTA_dataset
 from nidataset.slices import extract_slices_dataset, extract_annotations_dataset
+from nidataset.qc import check_dataset, check_volume, to_json
+import json
 
 from net.initialization.get_yaml import get_yaml
 from net.parameters.parameters import parameters_parsing
@@ -177,6 +179,49 @@ def main():
                            desired_volume=(224, 224, 128),
                            saving_mode='folder',
                            debug=True)
+
+    elif parser.task == 'qc_check':
+
+        # Run QC on a single image volume
+        report = check_volume(paths[parser.dataset]['images'])
+
+        # Save JSON report
+        report_path = os.path.join(os.getcwd(), parser.output_folder, "qc_report.json")
+        with open(report_path, 'w') as f:
+            f.write(to_json(report))
+
+        print(f"QC report saved to {report_path}")
+        print(f"Status: {report.status} ({report.counts()})")
+
+    elif parser.task == 'qc_dataset':
+
+        # Run QC over entire dataset folder or CSV manifest
+        dataset_path = paths[parser.dataset]['images']
+        ds_report = check_dataset(dataset_path)
+
+        # Save JSON report
+        report_path = os.path.join(os.getcwd(), parser.output_folder, "qc_dataset_report.json")
+        with open(report_path, 'w') as f:
+            f.write(to_json(ds_report))
+
+        # Print summary
+        print(f"\nDataset QC: {len(ds_report.items)} items")
+        print(f"Status: {ds_report.status}")
+        print(f"Summary: {ds_report.counts()}")
+
+        # Print distributions
+        if ds_report.distributions:
+            print("\nDistributions:")
+            for key in ("orientation", "spacing", "dtype"):
+                if key in ds_report.distributions:
+                    print(f"  {key}: {ds_report.distributions[key]}")
+
+            outliers = ds_report.distributions.get("outliers", {})
+            for key, paths_list in outliers.items():
+                if paths_list:
+                    print(f"  {key} outliers: {paths_list}")
+
+        print(f"\nFull report saved to {report_path}")
 
     else:
         raise ValueError('Unknown task {}.'.format(parser.task))

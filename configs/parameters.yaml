@@ -7,7 +7,9 @@ task:
     "skulling",
     "registration",
     "mip",
-    "resampling"
+    "resampling",
+    "qc_check",
+    "qc_dataset"
   ]
   help: "Task performed."
 

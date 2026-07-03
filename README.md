@@ -54,8 +54,45 @@ python3 main.py --dataset=my_dataset --task=extract_slices --output_folder=slice
 - `registration`: Register images to the specified template.
 - `mip`: Apply Maximum-Intensity-Projection.
 - `resampling`: Resample CTs to a target volume.
+- `qc_check`: Quality control on a single NIfTI volume (geometry, data integrity, orientations).
+- `qc_dataset`: Quality control on entire dataset folder with cross-file coherence analysis.
+
+## 🔍 Quality Control (QC)
+
+CT-Manager integrates **nidataset.qc** (v0.7.0+) to catch silent dataset bugs that poison ML training:
+
+**What it checks:**
+- **Geometry**: Affine matrices, orientation (RAS vs LAS), spacing isotropy
+- **Data integrity**: NaN/Inf values, dtype issues, all-zero volumes
+- **Pair/triple coherence**: Image↔mask alignment, annotations within masks
+
+**Single volume QC:**
+```bash
+python3 main.py --task=qc_check --dataset=my_dataset
+```
+
+**Dataset-wide QC (detects outliers):**
+```bash
+python3 main.py --task=qc_dataset --dataset=my_dataset --output_folder=qc_reports
+```
+
+**Output:** JSON report with per-file checks + dataset distributions (orientation, spacing, dtype counts and outliers).
+
+**Example report snippet:**
+```
+Dataset QC: 142 items
+Status: warning
+Summary: {'ok': 138, 'warning': 4, 'error': 0}
+
+Distributions:
+  orientation: {'RAS': 140, 'LAS': 2}
+  dtype: {'uint8': 142}
+  orientation outliers: ['scan_042.nii.gz', 'scan_089.nii.gz']
+```
 
 ## ⚠️ Troubleshooting
 
+- **Version mismatch:** Ensure `nidataset >= 0.7.0` is installed. Check with `pip list | grep nidataset`.
 - **Skulling task issues:** Run from terminal instead of IDE. Ensure input paths contain no spaces. Verify FSL is installed and accessible in `PATH`.
 - **Registration failures:** Check the template paths in `paths.yaml`. Verify input images are valid NIfTI format and ensure sufficient disk space for output.
+- **QC task issues:** For `qc_dataset`, provide either a folder of NIfTI files or a CSV manifest (columns: `image,mask[,annotation]`). JSON reports are saved to `output_folder/qc_*_report.json`.

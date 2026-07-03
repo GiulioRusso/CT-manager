@@ -1,2 +1,2 @@
-nidataset
-pyyaml
+nidataset>=0.7.0
+pyyaml>=6.0
